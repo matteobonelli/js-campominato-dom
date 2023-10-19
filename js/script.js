@@ -17,6 +17,7 @@ btn.addEventListener('click',() => {
         playingField.innerHTML = '';
         const squareNum = difficultySelector(selectDifficulty);
         const maxAttempt = squareNum - bombNum;
+        console.log(maxAttempt);
         randomContainer = generateBombs(squareNum);
         console.log(randomContainer);
         // console.log(squareNum);
@@ -45,7 +46,8 @@ btn.addEventListener('click',() => {
                 let message;
                 if (boxColor === 'boom-box'){
                     console.log('Hai perso!');
-                    message = 'Hai perso!'
+                    message = `<h4 class = 'display-3 text-danger fw-bold text-center'>Hai perso! <i class="fa-solid fa-face-grin-tongue-wink"></i></h4>
+                    <div class = 'fw-bold display-5 text-center text-light'>${score}</div>`;
                     gameOver();
                 } else{
                     console.log(squareIndex + 1);
@@ -53,13 +55,15 @@ btn.addEventListener('click',() => {
                     message = `<h4 class = 'display-3 text-danger fw-bold text-center'>Il tuo score</h4>
                     <div class = 'fw-bold display-5 text-center text-light'>${score}</div>`;
                     
-                    if(score === maxAttempt){
-                        message = 'Hai vinto!!!'
+                    if((score / 100) === maxAttempt){
+                        message = `<h4 class = 'display-3 text-success fw-bold text-center'>Hai Vinto! <i class="fa-solid fa-face-grin-stars"></i></h4>
+                        <div class = 'fw-bold display-5 text-center text-light'>${score}</div>`;
+                        
                         gameOver();
                     }
-                    scoreRecorder.innerHTML = message;
-                    scoreRecorder.classList.remove('d-none');
                 }
+                scoreRecorder.innerHTML = message;
+                scoreRecorder.classList.remove('d-none');
             }, {once : true});
             return square
         };
