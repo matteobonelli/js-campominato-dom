@@ -1,0 +1,36 @@
+.minedGrid{
+    width: 800px;
+    height: 800px;
+    border: 2px solid white;
+    margin: 10px auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+main{
+    position: relative
+}
+#scoreRecorder{
+    position: absolute;
+    top: 10%;
+    right: 9%;
+}
+.form-select{
+    width: 200px;
+}
+.box{
+    border: 2px solid white;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.active-box{
+    background-color: aqua;
+    color: black;
+}
+
+.boom-box{
+    background: red;
+    color: white;
+}
