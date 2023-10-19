@@ -1,9 +1,10 @@
 "use strict";
 const btn = document.querySelector('.btn');
-const bombNum = 16;
+const bombNum = 1;
 let score = 0;
-let gameOver = false;
+let youLose = false;
 btn.addEventListener('click',() => {
+    youLose = false;
     const selectDifficulty = document.getElementById('difficulty').value;
     const playingField = document.getElementById('playingField');
     const scoreRecorder = document.getElementById('scoreRecorder')
@@ -43,6 +44,7 @@ btn.addEventListener('click',() => {
             square.addEventListener('click', squareGenerator, {once : true}) ;
 
             function squareGenerator(){
+                if (youLose == true){ return };
                 square.innerHTML = boxAction;
                 square.classList.add(boxColor);
                 let message;
@@ -51,7 +53,7 @@ btn.addEventListener('click',() => {
                     message = `<h4 class = 'display-3 text-danger fw-bold text-center'>Hai perso! <i class="fa-solid fa-face-grin-tongue-wink"></i></h4>
                     <div class = 'fw-bold display-5 text-center text-light'>${score}</div>`;
                     gameOver();
-                    console.log(gameOver)
+                    youLose = true;
                 } else{
                     console.log(squareIndex + 1);
                     score += 100;
@@ -62,6 +64,7 @@ btn.addEventListener('click',() => {
                         message = `<h4 class = 'display-3 text-success fw-bold text-center'>Hai Vinto! <i class="fa-solid fa-face-grin-stars"></i></h4>
                         <div class = 'fw-bold display-5 text-center text-light'>${score}</div>`;
                         gameOver();
+                        youLose = true;
                     }
                 }
                 scoreRecorder.innerHTML = message;
