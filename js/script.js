@@ -1,4 +1,4 @@
-
+"use strict";
 const btn = document.querySelector('.btn');
 const bombNum = 16;
 let score = 0;
@@ -17,7 +17,7 @@ btn.addEventListener('click',() => {
         playingField.innerHTML = '';
         const squareNum = difficultySelector(selectDifficulty);
         const maxAttempt = squareNum - bombNum;
-        console.log(maxAttempt);
+        // console.log(maxAttempt);
         randomContainer = generateBombs(squareNum);
         console.log(randomContainer);
         // console.log(squareNum);
@@ -40,7 +40,9 @@ btn.addEventListener('click',() => {
                  };
             }
             square.innerHTML = squareIndex + 1; 
-            square.addEventListener('click', () => {
+            square.addEventListener('click', squareGenerator, {once : true}) ;
+
+            function squareGenerator(){
                 square.innerHTML = boxAction;
                 square.classList.add(boxColor);
                 let message;
@@ -49,6 +51,7 @@ btn.addEventListener('click',() => {
                     message = `<h4 class = 'display-3 text-danger fw-bold text-center'>Hai perso! <i class="fa-solid fa-face-grin-tongue-wink"></i></h4>
                     <div class = 'fw-bold display-5 text-center text-light'>${score}</div>`;
                     gameOver();
+                    console.log(gameOver)
                 } else{
                     console.log(squareIndex + 1);
                     score += 100;
@@ -58,13 +61,26 @@ btn.addEventListener('click',() => {
                     if((score / 100) === maxAttempt){
                         message = `<h4 class = 'display-3 text-success fw-bold text-center'>Hai Vinto! <i class="fa-solid fa-face-grin-stars"></i></h4>
                         <div class = 'fw-bold display-5 text-center text-light'>${score}</div>`;
-                        
                         gameOver();
                     }
                 }
                 scoreRecorder.innerHTML = message;
                 scoreRecorder.classList.remove('d-none');
-            }, {once : true});
+
+                function gameOver(){
+                    const arraySquareBombs = document.getElementsByClassName('box')
+                    for (let i = 0; i < arraySquareBombs.length; i++){
+                        let el = arraySquareBombs[i];
+                        if(randomContainer.includes(parseInt(el.textContent))){
+                            el.classList.add('boom-box');
+                            el.innerText = 'BOOM!'
+                        }
+                        el.removeEventListener('click', squareGenerator);
+                        
+                    }
+                }
+            }
+
             return square
         };
         function gridFieldGenerator(squareNumber, randomContainer){
@@ -76,16 +92,6 @@ btn.addEventListener('click',() => {
                 minedGrid.append(box);
             }
             return minedGrid
-        }
-        function gameOver(){
-            const arraySquareBombs = document.getElementsByClassName('box')
-            for (let i = 0; i < arraySquareBombs.length; i++){
-                let el = arraySquareBombs[i];
-                if(randomContainer.includes(parseInt(el.textContent))){
-                    el.classList.add('boom-box');
-                    el.innerText = 'BOOM!'
-                }
-            }
         }
     }
 });
